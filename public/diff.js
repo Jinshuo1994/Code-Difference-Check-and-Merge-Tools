@@ -9,9 +9,9 @@ const getDiff = (orig, target) => {
 
             const k = x - y;
             let prev_k;
-            if (k === bound.lowerBound) {
+            if (k - 1 < bound.lowerBound) {
                 prev_k = k + 1;
-            } else if (k === bound.upperBound) {
+            } else if (k + 1 > bound.upperBound) {
                 prev_k = k - 1;
             } else {
                 prev_k = trace[i].v[k + 1] > trace[i].v[k - 1] ? k + 1 : k - 1;
@@ -28,6 +28,12 @@ const getDiff = (orig, target) => {
             y = prev_y;
             changeHistory.push([x, y]);
         }
+        while (x > 0) {
+            x--;
+            y--;
+            changeHistory.push([x, y]);
+        }
+
         return changeHistory.reverse();
     };
 
@@ -59,9 +65,9 @@ const getDiff = (orig, target) => {
         upperBound = !reachRight ? d : upperBound - 1;
         let x;
         for (let k = lowerBound; k <= upperBound; k += 2) {
-            if (k === lowerBound) {
+            if (k === lowerBound && !reachBottom) {
                 x = editGraph[k + 1];
-            } else if (k === upperBound) {
+            } else if (k === upperBound && !reachRight) {
                 x = editGraph[k - 1] + 1;
             } else {
                 x = editGraph[k - 1] >= editGraph[k + 1] ? editGraph[k - 1] + 1 : editGraph[k + 1]
@@ -99,7 +105,7 @@ const getDiff = (orig, target) => {
     }
 };
 
-const printDiff = (changeHistory, orig, target) => {
+const printDiffInConsole = (changeHistory, orig, target) => {
     for (let i = 1; i < changeHistory.length; i++) {
         const prev_x = changeHistory[i - 1][0];
         const prev_y = changeHistory[i - 1][1];
@@ -119,12 +125,36 @@ const printDiff = (changeHistory, orig, target) => {
     }
 };
 
-//test
-(() => {
-    const orig = "ABCABBA";
-    const target = "CBABAC";
+const convertDiffToLog = (changeHistory, orig, target) => {
+    const log = [];
+    for (let i = 1; i < changeHistory.length; i++) {
+        const prev_x = changeHistory[i - 1][0];
+        const prev_y = changeHistory[i - 1][1];
+        const curr_x = changeHistory[i][0];
+        const curr_y = changeHistory[i][1];
 
-    let changeHistory = getDiff(orig, target);
-    printDiff(changeHistory, orig, target)
-})();
+        // only x coordinate increases ==> rightward move ==> delete a character in the original string
+        // only y coordinate increases ==> downward move ==> add a character in the target string
+        // both coordinates increase ==> diagonal move ==> the character in the original and target string is the same
+        if (curr_x > prev_x && curr_y > prev_y) {
+            log.push({text: orig.charAt(prev_x), operation: "same"});
+        } else if (curr_x > prev_x) {
+            log.push({text: orig.charAt(prev_x), operation: "add"});
+        } else if (curr_y > prev_y) {
+            log.push({text: target.charAt(prev_y), operation: "delete"});
+        }
+    }
+    return log;
+};
 
+export {getDiff, printDiffInConsole, convertDiffToLog}
+
+
+// test
+// (() => {
+//     const orig = "abc";
+//     const target = "abc";
+//
+//     let changeHistory = getDiff(orig, target);
+//     printDiffInConsole(changeHistory, orig, target)
+// })();

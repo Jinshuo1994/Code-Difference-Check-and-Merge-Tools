@@ -1,0 +1,48 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous" />    <link rel="stylesheet" href="index.css" />
+    <title>Diff Check</title>
+</head>
+<body>
+<div class="container">
+    <div class="text-right">
+        <a class="font-italic font-weight-bold text-muted" href="https://github.com/Jinshuo1994/Code-Difference-Check-and-Merge-Tools" target="_blank">
+            View on Github <i class="fab fa-github-square fa-lg font-weight-normal"></i>
+        </a>
+    </div>
+    <h1>Diff Check</h1>
+    <h2>Version 1: letter by letter comparsion</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="targetTextarea">Base</label>
+                <textarea class="form-control" id="targetTextarea" rows="10"></textarea>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="origTextarea">Compared</label>
+                <textarea class="form-control" id="origTextarea" rows="10"></textarea>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary btn-block" id="compareButton">Compare</button>
+    <div class="row text-center mt-3 mb-3">
+        <div class="col-12">
+            <span>Result</span>
+        </div>
+        <div class="col-md-6 mx-auto">
+            <div style="min-height: 15vh" class="border border-primary rounded" id="resultTextarea"></div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="index.js" type="module"></script>
+</html>

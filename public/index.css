@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Literata&display=swap');
+
+h1 {
+    font-family: 'Literata', serif;
+}
+
+h2 {
+    font-size: medium;
+    color: grey;
+}
+
+.delete {
+    color: red;
+}
+
+.delete::before {
+    content: "-- "
+}
+
+.add {
+    color: green;
+}
+
+.add::before {
+    content: "++ "
+}
+
+.same {
+    color: black;
+}
+
+.same::before {
+    content: "== "
+}
